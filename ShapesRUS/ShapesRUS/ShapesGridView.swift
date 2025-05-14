@@ -7,12 +7,11 @@
 
 import SwiftUI
 
-
-
 struct ShapesGridView: View {
     
     @State private var shapesButtons: [ShapesButton] = []
     @State private var savedShapes: [SavedShape] = []
+    @EnvironmentObject private var navigationState: NavigationState
 
     let columns = [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())]
     
@@ -55,7 +54,7 @@ struct ShapesGridView: View {
                 }
                 Spacer()
                 Button("Edit Circles") {
-                    editCircles()
+                    navigationState.routes.append(.editShapes)
                 }
             }.padding()
             
@@ -66,17 +65,12 @@ struct ShapesGridView: View {
         savedShapes.removeAll()
     }
 
-    func editCircles() {
-        
-    }
-
     func addShape(shape: String) {
         savedShapes.append(SavedShape(shapePath: shape))
     }
 }
 
-
-
 #Preview {
     ShapesGridView()
+    // Previews won't work with the way I've setup the navigation stack. Please use the simulator or run on device.
 }

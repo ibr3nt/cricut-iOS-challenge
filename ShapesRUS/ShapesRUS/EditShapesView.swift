@@ -1,5 +1,5 @@
 //
-//  EditCirclesView.swift
+//  EditShapesView.swift
 //  ShapesRUS
 //
 //  Created by Brent Arnold on 5/14/25.
@@ -7,7 +7,9 @@
 
 import SwiftUI
 
-struct EditCirclesView: View {
+struct EditShapesView: View {
+    
+    let selectedShape: String = ""
     
     let columns = [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())]
     
@@ -46,5 +48,5 @@ struct EditCirclesView: View {
 }
 
 #Preview {
-    EditCirclesView()
+    EditShapesView()
 }
