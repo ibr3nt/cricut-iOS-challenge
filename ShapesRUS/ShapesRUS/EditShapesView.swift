@@ -70,4 +70,5 @@ struct EditShapesView: View {
 
 #Preview {
     EditShapesView()
+    // Previews won't work with the way I've setup the navigation stack. Please use the simulator or run on device.
 }
