@@ -6,42 +6,45 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct EditShapesView: View {
     
-    let selectedShape: String = ""
+    @EnvironmentObject private var selectedShape: SelectedShape
+    @EnvironmentObject private var savedShapesArray: SavedShapesArray
     
     let columns = [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())]
     
     var body: some View {
         ScrollView {
             LazyVGrid(columns: columns) {
-//                ForEach(savedShapes, id: \.self) { savedShape in
-//                    Image(systemName: "\(savedShape.shapePath).fill")
-//                        .font(.system(size: 100))
-//                        .foregroundStyle(.teal)
-//                        .frame(width: 100, height: 100)
-//                }
+                // Filter array for selectedShape.item
+                let filteredShapes = savedShapesArray.savedShapes.filter { $0.shapePath == selectedShape.item }
+                
+                ForEach(filteredShapes, id: \.self) { savedShape in
+                    Image(systemName: "\(savedShape.shapePath).fill")
+                        .font(.system(size: 100))
+                        .foregroundStyle(.teal)
+                        .frame(width: 100, height: 100)
+                }
             }
         }
         .safeAreaInset(edge: .bottom) {
             HStack {
-//                ForEach(shapesButtons) { button in
-                    Spacer()
-                    
+                Spacer()
+                
                 Button("Delete All") {
-//                        addShape(shape: button.drawPath)
-                    }
-                    Spacer()
+                    
+                }
+                Spacer()
                 Button("Add") {
                     
                 }
-                    Spacer()
+                Spacer()
                 Button("Remove") {
                     
                 }
                 Spacer()
-//                }
             }.padding()
         }
     }

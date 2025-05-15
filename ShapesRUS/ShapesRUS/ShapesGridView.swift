@@ -6,19 +6,23 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct ShapesGridView: View {
     
     @State private var shapesButtons: [ShapesButton] = []
-    @State private var savedShapes: [SavedShape] = []
     @EnvironmentObject private var navigationState: NavigationState
+    @EnvironmentObject private var selectedShape: SelectedShape
+    @EnvironmentObject private var savedShapesArray: SavedShapesArray
+    // Started to work with SwiftData to persist the array of shapes but ran out of time.
+    
 
     let columns = [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())]
     
     var body: some View {
         ScrollView {
             LazyVGrid(columns: columns) {
-                ForEach(savedShapes, id: \.self) { savedShape in
+                ForEach(savedShapesArray.savedShapes, id: \.self) { savedShape in
                     Image(systemName: "\(savedShape.shapePath).fill")
                         .font(.system(size: 100))
                         .foregroundStyle(.teal)
@@ -54,6 +58,8 @@ struct ShapesGridView: View {
                 }
                 Spacer()
                 Button("Edit Circles") {
+                    selectedShape.item = "circle"
+                    print(selectedShape.item)
                     navigationState.routes.append(.editShapes)
                 }
             }.padding()
@@ -62,11 +68,11 @@ struct ShapesGridView: View {
     }
     
     func clearAll() {
-        savedShapes.removeAll()
+        savedShapesArray.savedShapes.removeAll()
     }
 
     func addShape(shape: String) {
-        savedShapes.append(SavedShape(shapePath: shape))
+        savedShapesArray.savedShapes.append(SavedShape(shapePath: shape))
     }
 }
 
