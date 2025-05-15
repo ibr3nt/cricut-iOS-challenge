@@ -16,11 +16,12 @@ struct EditShapesView: View {
     let columns = [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())]
     
     var body: some View {
+        
+        // Filter array for selectedShape.item
+        let filteredShapes = savedShapesArray.savedShapes.filter { $0.shapePath == selectedShape.item }
+        
         ScrollView {
             LazyVGrid(columns: columns) {
-                // Filter array for selectedShape.item
-                let filteredShapes = savedShapesArray.savedShapes.filter { $0.shapePath == selectedShape.item }
-                
                 ForEach(filteredShapes, id: \.self) { savedShape in
                     Image(systemName: "\(savedShape.shapePath).fill")
                         .font(.system(size: 100))
@@ -34,18 +35,35 @@ struct EditShapesView: View {
                 Spacer()
                 
                 Button("Delete All") {
-                    
+                    deleteAllSelectedShapes(filtered: filteredShapes)
                 }
                 Spacer()
                 Button("Add") {
-                    
+                    addSelectedShape()
                 }
                 Spacer()
                 Button("Remove") {
-                    
+                    removeSelectedShape()
                 }
                 Spacer()
             }.padding()
+        }
+    }
+    
+    func deleteAllSelectedShapes(filtered: [SavedShape]) {
+        savedShapesArray.savedShapes = savedShapesArray.savedShapes.filter { !filtered.contains($0)}
+    }
+    
+    func addSelectedShape() {
+        savedShapesArray.savedShapes.append(SavedShape(shapePath: selectedShape.item))
+    }
+    
+    func removeSelectedShape() {
+        for (index, item) in savedShapesArray.savedShapes.enumerated().reversed() {
+            if item.shapePath == selectedShape.item {
+                savedShapesArray.savedShapes.remove(at: index)
+                break
+            }
         }
     }
 }

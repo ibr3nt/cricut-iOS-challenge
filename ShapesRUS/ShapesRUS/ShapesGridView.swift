@@ -14,13 +14,14 @@ struct ShapesGridView: View {
     @EnvironmentObject private var navigationState: NavigationState
     @EnvironmentObject private var selectedShape: SelectedShape
     @EnvironmentObject private var savedShapesArray: SavedShapesArray
-    // Started to work with SwiftData to persist the array of shapes but ran out of time.
+    // TODO: Started to work with SwiftData to persist the array of shapes but ran out of time.
     
 
     let columns = [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())]
     
     var body: some View {
         ScrollView {
+            // TODO: This should be a reusable component rather than duplicating this across views.
             LazyVGrid(columns: columns) {
                 ForEach(savedShapesArray.savedShapes, id: \.self) { savedShape in
                     Image(systemName: "\(savedShape.shapePath).fill")
@@ -66,7 +67,7 @@ struct ShapesGridView: View {
             
         }
     }
-    
+    // TODO: these functions should also be extracted out of both views and
     func clearAll() {
         savedShapesArray.savedShapes.removeAll()
     }
